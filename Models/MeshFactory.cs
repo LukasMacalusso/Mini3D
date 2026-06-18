@@ -28,23 +28,33 @@ public static class MeshFactory
             0, 4, 7,  0, 7, 3, // Top face
             1, 2, 6,  1, 6, 5, // Bottom face
         };
-        // TODO: Define the 8 vertices and 36 indices (12 triangles) for a cube
-        return mesh;
-    }
-
-            new Vector3(1, -1, 1),
-            new Vector3(1, 1, 1),
-            new Vector3(-1, 1, 1),
-        };
-
-        // TODO: Define the 8 vertices and 36 indices (12 triangles) for a cube
         return mesh;
     }
 
     public static Mesh CreatePyramidMesh()
     {
         // TODO: Define the vertices and indices for a square-based pyramid
-        return new Mesh();
+        var mesh = new Mesh();
+
+        mesh.Vertices = new Vector3[]
+        {
+            new Vector3(-0.5f, -0.5f, -0.5f),//0: base bottom-left-Back
+            new Vector3(0.5f, -0.5f, -0.5f), //1: base bottom-right-Back
+            new Vector3(0.5f, -0.5f, 0.5f),  //2: base bottom-right-Front
+            new Vector3(-0.5f, -0.5f, 0.5f), //3: base bottom-left-Front
+            new Vector3(0.0f, 0.5f, 0.0f)    //4: tip (mid-top)
+        };
+
+        mesh.Triangles = new int[]
+        {
+            0, 1, 2,  0, 2, 3,  // square base
+            3, 2, 4,            // front side
+            1, 0, 4,            // back side
+            0, 3, 4,            // left side
+            2, 1, 4,            // right side
+        };
+
+        return mesh;
     }
 
     public static Mesh CreatePrismMesh()
