@@ -14,19 +14,20 @@ public struct Matrix4x4
     {
         Matrix4x4 result = new Matrix4x4();
         
-        // i left
-        for (int i = 0; i < 4; i++)
+        // row (left matrix)
+        for (int row = 0; row < 4; row++)
         {
-            // j right
-            for (int j = 0; j < 4; j++)
+            // column (right matrix)
+            for (int col = 0; col < 4; col++)
             {
                 float sum = 0f;
                  
-                for (int k = 0; k < 4; k++)
+                // element (left column, right row)
+                for (int element = 0; element < 4; element++)
                 {
-                    sum += left.Elements[i, k] * right.Elements[k, j];
+                    sum += left.Elements[row, element] * right.Elements[element, col];
                 }
-                result.Elements[i, j] = sum;
+                result.Elements[row, col] = sum;
             }
         }
         
