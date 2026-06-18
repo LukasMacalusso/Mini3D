@@ -70,6 +70,7 @@ public static class MeshFactory
             new Vector3(0.0f, 0.5f, -0.5f),  // 3: back up
             new Vector3(-0.5f, -0.5f, -0.5f),// 4: back down-left
             new Vector3(0.5f, -0.5f, -0.5f), // 5: back down-right
+        };
 
         mesh.Triangles = new int[]
         {
