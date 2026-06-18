@@ -2,30 +2,39 @@ namespace Mini3D.Math;
 
 public static class MatrixFactory
 {
-    // -- Transformation Generators -- //
-    public static Matrix4x4 CreateTranslation(Vector3 offset)
+    // -- Matrix Generators -- //
+    public static Matrix4x4 CreateIdentityMatrix()
     {
-        Matrix4x4 matrix = new Matrix4x4();
-        
-        // 1. Matriz Identidad (1 en la diagonal para mantener la forma original)
-        matrix.Elements[0, 0] = 1f;
-        matrix.Elements[1, 1] = 1f;
-        matrix.Elements[2, 2] = 1f;
-        matrix.Elements[3, 3] = 1f;
 
-        // 2. Desplazamiento en la última columna
-        matrix.Elements[0, 3] = offset.X;
-        matrix.Elements[1, 3] = offset.Y;
-        matrix.Elements[2, 3] = offset.Z;
+        Matrix4x4 IdentityMatrix = new Matrix4x4();
 
-        return matrix;
+        // - Diagonal of 1's - //
+        IdentityMatrix.Elements[0, 0] = 1f;
+        IdentityMatrix.Elements[1, 1] = 1f;
+        IdentityMatrix.Elements[2, 2] = 1f;
+        IdentityMatrix.Elements[3, 3] = 1f;
+
+        return IdentityMatrix;
     }
 
-    public static Matrix4x4 CreateScale(Vector3 scale)
+    // -- Transformation Generators -- //
+    public static Matrix4x4 CreateTranslationMatrix(Vector3 offset)
+    {
+        Matrix4x4 translationMatrix = CreateIdentityMatrix();
+
+        // - Use the third columnn to translate by offsets - //
+        translationMatrix.Elements[0, 3] = offset.X;
+        translationMatrix.Elements[1, 3] = offset.Y;
+        translationMatrix.Elements[2, 3] = offset.Z;
+
+        return translationMatrix;
+    }
+
+    public static Matrix4x4 CreateScaleMatrix(Vector3 scale)
     {
         Matrix4x4 matrix = new Matrix4x4();
-        
-        // Para escalar, ponemos los valores por los que queremos multiplicar en la diagnal.
+
+        // - X, Y, & Z On the diagonal - //
         matrix.Elements[0, 0] = scale.X;
         matrix.Elements[1, 1] = scale.Y;
         matrix.Elements[2, 2] = scale.Z;
@@ -42,10 +51,10 @@ public static class MatrixFactory
 
         // El eje X se queda igual. Se rota Y y Z.
         matrix.Elements[0, 0] = 1f;
-        
+
         matrix.Elements[1, 1] = cos;
         matrix.Elements[1, 2] = -sin;
-        
+
         matrix.Elements[2, 1] = sin;
         matrix.Elements[2, 2] = cos;
 
@@ -62,10 +71,10 @@ public static class MatrixFactory
 
         // El eje Y se queda igual. Se rota X y Z.
         matrix.Elements[0, 0] = cos;
-        matrix.Elements[0, 2] = sin; 
-        
+        matrix.Elements[0, 2] = sin;
+
         matrix.Elements[1, 1] = 1f;
-        
+
         matrix.Elements[2, 0] = -sin;
         matrix.Elements[2, 2] = cos;
 
@@ -83,12 +92,12 @@ public static class MatrixFactory
         // El eje Z se queda igual. Se rota X e Y.
         matrix.Elements[0, 0] = cos;
         matrix.Elements[0, 1] = -sin;
-        
+
         matrix.Elements[1, 0] = sin;
         matrix.Elements[1, 1] = cos;
 
         matrix.Elements[2, 2] = 1f;
-        
+
         matrix.Elements[3, 3] = 1f;
 
         return matrix;

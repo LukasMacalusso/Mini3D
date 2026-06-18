@@ -12,4 +12,9 @@ public struct Vector3
         Y = y;
         Z = z;
     }
+
+    public static float Dot(Vector3 a, Vector3 b)
+    {
+        return (a.X * b.X) + (a.Y * b.Y) + (a.Z * b.Z);
+    }
 }

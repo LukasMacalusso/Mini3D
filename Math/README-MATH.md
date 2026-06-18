@@ -14,11 +14,11 @@ La estructura Matrix4x4 representa una matriz de 4 filas y 4 columnas. El compon
 ### Operaciones:
 
 - **Matriz x Matriz**: Implementa el producto escalar de "Fila por columna". Permite encadenar varias transformaciones en una sola matriz (Traslación x Rotación x Escala).
-- **Matriz x Vector4**: Transforma un vertice 3D aplicando las operaciones en la matriz. El vector estructuralmente es una matriz de 4x1.
+- **Matriz x Vector4**: Transforma un vertice 3D aplicando las operaciones en la matriz. El vector estructuralmente es un vector4, equivalente a una matriz 4x1 matematicamente.
 
 
 ## 2. Generador de Transformaciones: MatrixFactory
-Esta clase estática contiene métodos de ayuda para instanciar matrices de transformación ya configuradas.
+Esta clase estática contiene métodos de ayuda para instanciar matrices ya configuradas (Identidad, Transformacion, etc).
 
 ### CreateTranslation(Vector3 offset)
 Construye una matriz de Traslación.

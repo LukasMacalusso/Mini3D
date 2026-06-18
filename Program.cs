@@ -3,6 +3,7 @@ using Mini3D.Engine;
 using Mini3D.Math;
 using Mini3D.Models;
 using System.Collections.Generic;
+using Mesh = Mini3D.Models.Mesh;
 
 namespace Mini3D;
 

@@ -14,4 +14,9 @@ public struct Vector4
         Z = z;
         W = w;
     }
+
+    public static float Dot(Vector4 a, Vector4 b)
+    {
+        return (a.X * b.X) + (a.Y * b.Y) + (a.Z * b.Z) + (a.W * b.W);
+    }
 }
