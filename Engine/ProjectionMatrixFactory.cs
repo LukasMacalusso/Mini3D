@@ -6,17 +6,14 @@ public static class ProjectionMatrixFactory
     // -- Projection Matrices -- //
     public static Matrix4x4 CreatePerspectiveMatrix(float fovRadians, float aspect, float near, float far)
     {
-        Matrix4x4 result = new Matrix4x4();
-        
-        float yScale = cot(fovRadians / 2);
+		float yScale = 1.0f / (float)System.Math.Tan(fovRadians / 2.0f);
         float xScale = yScale / aspect;
         
-        result.Elements[0, 0] = xScale;
-        result.Elements[1, 1] = yScale;
-        result.Elements[2, 2] = far / (far - near);
-        result.Elements[2, 3] = 1.0f;
-        result.Elements[3, 2] = -near * far / (far - near);
-        
-        return result;
+		return new Matrix4x4(
+    		xScale, 0.0f,   0.0f,                         0.0f,
+    		0.0f,   yScale, 0.0f,                         0.0f,
+    		0.0f,   0.0f,   far / (far - near),           1.0f,
+    		0.0f,   0.0f,   (-near * far) / (far - near), 0.0f
+		);
     }
 }
