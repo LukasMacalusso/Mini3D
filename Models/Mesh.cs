@@ -14,7 +14,7 @@ public class Mesh
     public Vector3[] Vertices;
     
     // Every 3 integers represent the indices of the Vertices array that form a triangle face
-    public int[] Triangles;
+    public int[] TriangleIndices;
 
     public Mesh()
     {
@@ -22,6 +22,6 @@ public class Mesh
         Rotation = new Vector3(0, 0, 0);
         Scale = new Vector3(1, 1, 1);
         Vertices = new Vector3[0];
-        Triangles = new int[0];
+        TriangleIndices = new int[0];
     }
 }

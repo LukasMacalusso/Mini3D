@@ -1,86 +1,106 @@
 namespace Mini3D.Models;
 
+using Mini3D.Math;
+
 public static class MeshFactory
 {
     // -- Geometry Generators -- //
+
+    // -- CUBE -- //
     public static Mesh CreateCubeMesh()
     {
-        var mesh = new Mesh();
-        //Define the 8 vertices of the cube
-        mesh.Vertices = new Vector3[]
+        return new Mesh
         {
-            new Vector3(-0.5f, -0.5f, -0.5f),//0: bottom-left-Back
-            new Vector3(0.5f, -0.5f, -0.5f), //1: bottom-right-Back
-            new Vector3(0.5f, 0.5f, -0.5f),  //2: top-right-Back
-            new Vector3(-0.5f, 0.5f, -0.5f), //3: top-left-Back
-            new Vector3(-0.5f, -0.5f, 0.5f),  //4: bottom-left-Front
-            new Vector3(0.5f, -0.5f, 0.5f),  //5: bottom-right-Front
-            new Vector3(0.5f, 0.5f, 0.5f),  //6: top-right-Front
-            new Vector3(-0.5f, 0.5f, 0.5f),  //7: top-left-Front
+            Vertices = GetCubeVertices(),
+            TriangleIndices = GetCubeTriangleIndices()
         };
-
-        mesh.Triangles = new int[]
-        {
-            0, 2, 1,  0, 3, 2, // Front face
-            4, 5, 6,  4, 6, 7, // Back face
-            3, 6, 2,  3, 7, 6, // Left face
-            0, 1, 5,  0, 5, 4, // Right face
-            0, 4, 7,  0, 7, 3, // Top face
-            1, 2, 6,  1, 6, 5, // Bottom face
-        };
-        return mesh;
     }
 
+    private static Vector3[] GetCubeVertices()
+    {
+        Vector3[] Front() => [new(-0.5f, -0.5f, 0.5f), new(0.5f, -0.5f, 0.5f), new(0.5f, 0.5f, 0.5f), new(-0.5f, 0.5f, 0.5f)];
+        Vector3[] Back() => [new(0.5f, -0.5f, -0.5f), new(-0.5f, -0.5f, -0.5f), new(-0.5f, 0.5f, -0.5f), new(0.5f, 0.5f, -0.5f)];
+        Vector3[] Left() => [new(-0.5f, -0.5f, -0.5f), new(-0.5f, -0.5f, 0.5f), new(-0.5f, 0.5f, 0.5f), new(-0.5f, 0.5f, -0.5f)];
+        Vector3[] Right() => [new(0.5f, -0.5f, 0.5f), new(0.5f, -0.5f, -0.5f), new(0.5f, 0.5f, -0.5f), new(0.5f, 0.5f, 0.5f)];
+        Vector3[] Top() => [new(-0.5f, 0.5f, 0.5f), new(0.5f, 0.5f, 0.5f), new(0.5f, 0.5f, -0.5f), new(-0.5f, 0.5f, -0.5f)];
+        Vector3[] Bottom() => [new(-0.5f, -0.5f, -0.5f), new(0.5f, -0.5f, -0.5f), new(0.5f, -0.5f, 0.5f), new(-0.5f, -0.5f, 0.5f)];
+
+        return [.. Front(), .. Back(), .. Left(), .. Right(), .. Top(), .. Bottom()];
+    }
+
+    private static int[] GetCubeTriangleIndices()
+    {
+        int[] Front() => [0, 1, 2, 0, 2, 3];
+        int[] Back() => [4, 5, 6, 4, 6, 7];
+        int[] Left() => [8, 9, 10, 8, 10, 11];
+        int[] Right() => [12, 13, 14, 12, 14, 15];
+        int[] Top() => [16, 17, 18, 16, 18, 19];
+        int[] Bottom() => [20, 21, 22, 20, 22, 23];
+
+        return [.. Front(), .. Back(), .. Left(), .. Right(), .. Top(), .. Bottom()];
+    }
+
+    // -- PYRAMID -- //
     public static Mesh CreatePyramidMesh()
     {
-        // TODO: Define the vertices and indices for a square-based pyramid
-        var mesh = new Mesh();
-
-        mesh.Vertices = new Vector3[]
+        return new Mesh
         {
-            new Vector3(-0.5f, -0.5f, -0.5f),//0: base bottom-left-Back
-            new Vector3(0.5f, -0.5f, -0.5f), //1: base bottom-right-Back
-            new Vector3(0.5f, -0.5f, 0.5f),  //2: base bottom-right-Front
-            new Vector3(-0.5f, -0.5f, 0.5f), //3: base bottom-left-Front
-            new Vector3(0.0f, 0.5f, 0.0f)    //4: tip (mid-top)
+            Vertices = GetPyramidVertices(),
+            TriangleIndices = GetPyramidTriangleIndices()
         };
-
-        mesh.Triangles = new int[]
-        {
-            0, 1, 2,  0, 2, 3,  // square base
-            3, 2, 4,            // front side
-            1, 0, 4,            // back side
-            0, 3, 4,            // left side
-            2, 1, 4,            // right side
-        };
-
-        return mesh;
     }
 
+    private static Vector3[] GetPyramidVertices()
+    {
+        Vector3[] Base() => [new(-0.5f, -0.5f, -0.5f), new(0.5f, -0.5f, -0.5f), new(0.5f, -0.5f, 0.5f), new(-0.5f, -0.5f, 0.5f)];
+        Vector3[] Front() => [new(-0.5f, -0.5f, 0.5f), new(0.5f, -0.5f, 0.5f), new(0.0f, 0.5f, 0.0f)];
+        Vector3[] Right() => [new(0.5f, -0.5f, 0.5f), new(0.5f, -0.5f, -0.5f), new(0.0f, 0.5f, 0.0f)];
+        Vector3[] Back() => [new(0.5f, -0.5f, -0.5f), new(-0.5f, -0.5f, -0.5f), new(0.0f, 0.5f, 0.0f)];
+        Vector3[] Left() => [new(-0.5f, -0.5f, -0.5f), new(-0.5f, -0.5f, 0.5f), new(0.0f, 0.5f, 0.0f)];
+
+        return [.. Base(), .. Front(), .. Right(), .. Back(), .. Left()];
+    }
+
+    private static int[] GetPyramidTriangleIndices()
+    {
+        int[] Base() => [0, 1, 2, 0, 2, 3];
+        int[] Front() => [4, 5, 6];
+        int[] Right() => [7, 8, 9];
+        int[] Back() => [10, 11, 12];
+        int[] Left() => [13, 14, 15];
+
+        return [.. Base(), .. Front(), .. Right(), .. Back(), .. Left()];
+    }
+
+    // -- PRISM -- //
     public static Mesh CreatePrismMesh()
     {
-        // TODO: Define the vertices and indices for a triangular prism
-        var mesh = new Mesh();
-
-        mesh.Vertices = new Vector3[]
+        return new Mesh
         {
-            new Vector3(0.0f, 0.5f, 0.5f),   // 0: front up
-            new Vector3(-0.5f, -0.5f, 0.5f), // 1: front down-left
-            new Vector3(0.5f, -0.5f, 0.5f),  // 2: front down-right
-            new Vector3(0.0f, 0.5f, -0.5f),  // 3: back up
-            new Vector3(-0.5f, -0.5f, -0.5f),// 4: back down-left
-            new Vector3(0.5f, -0.5f, -0.5f), // 5: back down-right
+            Vertices = GetPrismVertices(),
+            TriangleIndices = GetPrismTriangleIndices()
         };
+    }
 
-        mesh.Triangles = new int[]
-        {
-            0, 1, 2,           // front side
-            3, 5, 4,           // back side
-            1, 4, 5,  1, 5, 2, // bottom wall (flat rectangular base)
-            0, 3, 4,  0, 4, 1, // sloping right wall
-            0, 2, 5,  0, 5, 3, // sloping left wall
-        };
+    private static Vector3[] GetPrismVertices()
+    {
+        Vector3[] Front() => [new(-0.5f, -0.5f, 0.5f), new(0.5f, -0.5f, 0.5f), new(0.0f, 0.5f, 0.5f)];
+        Vector3[] Back() => [new(0.5f, -0.5f, -0.5f), new(-0.5f, -0.5f, -0.5f), new(0.0f, 0.5f, -0.5f)];
+        Vector3[] Bottom() => [new(-0.5f, -0.5f, -0.5f), new(0.5f, -0.5f, -0.5f), new(0.5f, -0.5f, 0.5f), new(-0.5f, -0.5f, 0.5f)];
+        Vector3[] Left() => [new(-0.5f, -0.5f, -0.5f), new(-0.5f, -0.5f, 0.5f), new(0.0f, 0.5f, 0.5f), new(0.0f, 0.5f, -0.5f)];
+        Vector3[] Right() => [new(0.5f, -0.5f, 0.5f), new(0.5f, -0.5f, -0.5f), new(0.0f, 0.5f, -0.5f), new(0.0f, 0.5f, 0.5f)];
 
-        return mesh;
+        return [.. Front(), .. Back(), .. Bottom(), .. Left(), .. Right()];
+    }
+
+    private static int[] GetPrismTriangleIndices()
+    {
+        int[] Front() => [0, 1, 2];
+        int[] Back() => [3, 4, 5];
+        int[] Bottom() => [6, 7, 8, 6, 8, 9];
+        int[] Left() => [10, 11, 12, 10, 12, 13];
+        int[] Right() => [14, 15, 16, 14, 16, 17];
+
+        return [.. Front(), .. Back(), .. Bottom(), .. Left(), .. Right()];
     }
 }
