@@ -33,7 +33,7 @@ public class Renderer
         {
             // TODO 3: Generate the World Matrix for this mesh (Translation * Rotation * Scale)
 
-            // TODO 4: Loop through the mesh's Triangles index buffer (stepping by 3)
+            // TODO 4: Loop through the mesh's TriangleIndices index buffer (stepping by 3)
             //   a) Get the 3 Vertices from the mesh
             //   b) Multiply each vertex by the World Matrix
             //   c) Multiply by the View Matrix
