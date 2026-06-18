@@ -72,4 +72,16 @@ public static class MatrixFactory
             0f, 0f, 0f, 1f
         );
     }
+
+    public static Matrix4x4 CreateWorldMatrix(Vector3 position, Vector3 rotation, Vector3 scale)
+    {
+        Matrix4x4 scaleMatrix = CreateScaleMatrix(scale);
+        Matrix4x4 rotX = CreateRotationX(rotation.X);
+        Matrix4x4 rotY = CreateRotationY(rotation.Y);
+        Matrix4x4 rotZ = CreateRotationZ(rotation.Z);
+        Matrix4x4 translationMatrix = CreateTranslationMatrix(position);
+
+        // Multiplication order for column vectors (v' = T * R * S * v)
+        return translationMatrix * rotZ * rotY * rotX * scaleMatrix;
+    }
 }
