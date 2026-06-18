@@ -9,6 +9,8 @@ public class Mesh
     public Vector3 Rotation;
     public Vector3 Scale;
 
+    public Matrix4x4 WorldMatrix => MatrixFactory.CreateWorldMatrix(Position, Rotation, Scale);
+
     // -- Geometry Data -- //
     // The raw 3D coordinates relative to the object's center (0,0,0)
     public Vector3[] Vertices;
