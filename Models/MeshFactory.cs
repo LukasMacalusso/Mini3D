@@ -60,6 +60,26 @@ public static class MeshFactory
     public static Mesh CreatePrismMesh()
     {
         // TODO: Define the vertices and indices for a triangular prism
-        return new Mesh();
+        var mesh = new Mesh();
+
+        mesh.Vertices = new Vector3[]
+        {
+            new Vector3(0.0f, 0.5f, 0.5f),   // 0: front up
+            new Vector3(-0.5f, -0.5f, 0.5f), // 1: front down-left
+            new Vector3(0.5f, -0.5f, 0.5f),  // 2: front down-right
+            new Vector3(0.0f, 0.5f, -0.5f),  // 3: back up
+            new Vector3(-0.5f, -0.5f, -0.5f),// 4: back down-left
+            new Vector3(0.5f, -0.5f, -0.5f), // 5: back down-right
+
+        mesh.Triangles = new int[]
+        {
+            0, 1, 2,           // front side
+            3, 5, 4,           // back side
+            1, 4, 5,  1, 5, 2, // bottom wall (flat rectangular base)
+            0, 3, 4,  0, 4, 1, // sloping right wall
+            0, 2, 5,  0, 5, 3, // sloping left wall
+        };
+
+        return mesh;
     }
 }
