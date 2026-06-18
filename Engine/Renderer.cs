@@ -9,13 +9,13 @@ public class Renderer
     private int _screenWidth;
     private int _screenHeight;
 
-    private List<ProjectedFace> _facesToDraw;
+    private List<ScreenTriangle> _facesToDraw;
 
     public Renderer(int width, int height)
     {
         _screenWidth = width;
         _screenHeight = height;
-        _facesToDraw = new List<ProjectedFace>();
+        _facesToDraw = new List<ScreenTriangle>();
     }
 
     public void RenderScene(List<Mesh> sceneObjects, Camera camera)
@@ -45,7 +45,7 @@ public class Renderer
         }
 
         // TODO 5: Sort facesToDraw by their AverageDepth (Painter's Algorithm)
-        
+
         // TODO 6: Loop through the sorted list and use Raylib.DrawTriangle to paint them!
     }
 }
