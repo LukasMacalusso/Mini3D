@@ -13,7 +13,6 @@ public class Camera
         Target = target;
     }
 
-    // -- Matrix Generation -- //
     public Matrix4x4 GetViewMatrix()
     {
         Vector3 worldUp = new Vector3(0, 1, 0);

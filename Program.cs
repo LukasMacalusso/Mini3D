@@ -18,7 +18,7 @@ class Program
         const int screenHeight = 800;
         Raylib.InitWindow(screenWidth, screenHeight, "Mini 3D Defense Showcase");
         Raylib.SetTargetFPS(60);
-        Raylib.DisableCursor(); // Lock and hide the cursor for FPS mode
+        Raylib.DisableCursor();
 
         // -- Setup Engine -- //
         Renderer renderer = new Renderer(screenWidth, screenHeight);
@@ -36,7 +36,6 @@ class Program
 
         while (!Raylib.WindowShouldClose())
         {
-
             // -- Bind Controllers -- //
             MovementController(camera);
             ModeController(renderer);
@@ -58,18 +57,14 @@ class Program
     {
         Raylib.DrawFPS(10, 10);
 
+        Raylib.DrawText("1/2/3: Swap Mesh  |  Spacebar: Toggle X-Ray", 10, 70, 20, Color.Green);
+        Raylib.DrawText("Left Click: Rotate  |  Right Click: Move  |  Scroll: Scale", 10, 95, 20, Color.Green);
         Raylib.DrawText("W/A/S/D: Move Camera", 10, 120, 20, Color.Green);
 
         string modeText = isWireframe ? "WIREFRAME MODE" : "SOLID MODE";
         Color modeColor = isWireframe ? Color.Green : Color.Blue;
         Raylib.DrawText(modeText, 10, 160, 20, modeColor);
     }
-
-    /*static void KeyBinds(Camera camera, Renderer renderer, List<Mesh> allMeshes, List<Mesh> sceneObjects)
-    {
-
-        // 3. Mesh Manipulations (Transformations)
-        }*/
 
     static void MovementController(Camera camera)
     {

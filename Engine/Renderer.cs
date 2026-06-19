@@ -115,7 +115,7 @@ public unsafe class Renderer
     }
 
     // --- Helper Drawing Methods --- //
-    public void ClearFrameBuffer(Color color)
+    private void ClearFrameBuffer(Color color)
     {
         for (int i = 0; i < _screenWidth * _screenHeight; i++)
         {
@@ -189,9 +189,9 @@ public unsafe class Renderer
             }
         }
 
-        bool IsPointInside(Vector2 vA, Vector2 vB, float pX, float pY)
-        {
-            return ((pX - vA.X) * (vB.Y - vA.Y) - (pY - vA.Y) * (vB.X - vA.X)) >= 0;
-        }
+    }
+    private bool IsPointInside(Vector2 vA, Vector2 vB, float pX, float pY)
+    {
+        return ((pX - vA.X) * (vB.Y - vA.Y) - (pY - vA.Y) * (vB.X - vA.X)) >= 0;
     }
 }
