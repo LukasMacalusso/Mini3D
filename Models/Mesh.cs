@@ -14,7 +14,7 @@ public class Mesh
     // -- Geometry Data -- //
     // The raw 3D coordinates relative to the object's center (0,0,0)
     public Vector3[] Vertices;
-    
+
     // Every 3 integers represent the indices of the Vertices array that form a triangle face
     public int[] TriangleIndices;
 

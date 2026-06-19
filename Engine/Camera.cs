@@ -1,5 +1,4 @@
 namespace Mini3D.Engine;
-
 using Mini3D.Math;
 
 public class Camera
@@ -14,10 +13,23 @@ public class Camera
     }
 
     // -- Matrix Generation -- //
-    public Matrix4x4 GetViewMatrix()
+	public Matrix4x4 GetViewMatrix()
     {
-        // TODO: Implement the "LookAt" view matrix logic
-        // This matrix shifts the entire 3D world so it is relative to the camera's perspective.
-        return new Matrix4x4();
+        Vector3 worldUp = new Vector3(0, 1, 0);
+
+        Vector3 forward = (Position - Target).GetNormalized();
+        Vector3 right = Vector3.CrossProduct(worldUp, forward).GetNormalized();
+        Vector3 up = Vector3.CrossProduct(forward, right);
+
+        float tx = -Vector3.DotProduct(Position, right);
+        float ty = -Vector3.DotProduct(Position, up);
+        float tz = -Vector3.DotProduct(Position, forward);
+
+    	return new Matrix4x4(
+        	right.X,   right.Y,   right.Z,   tx,
+        	up.X,      up.Y,      up.Z,      ty,
+        	forward.X, forward.Y, forward.Z, tz,
+        	0.0f,      0.0f,      0.0f,      1.0f
+    	);
     }
 }
