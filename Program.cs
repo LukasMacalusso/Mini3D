@@ -11,40 +11,51 @@ class Program
 {
     static void Main(string[] args)
     {
-        // 1. Initialize Raylib Window
+        // -- Initialize Window -- //
         const int screenWidth = 1000;
         const int screenHeight = 800;
         Raylib.InitWindow(screenWidth, screenHeight, "Mini Motor 3D");
         Raylib.SetTargetFPS(60);
 
-        // 2. Setup the Engine and Scene
+        // -- Setup Engine & Scene -- //
         Renderer renderer = new Renderer(screenWidth, screenHeight);
-        
-        // Start the camera at Z = -10, looking at the origin (0,0,0)
-        Camera camera = new Camera(new Vector3(0, 0, -10), new Vector3(0, 0, 0));
+        Camera camera = new Camera(new Vector3(0, 0, -5), new Vector3(0, 0, 0));
         
         List<Mesh> sceneObjects = new List<Mesh>();
-        // The Integrator will add the Modeler's shapes here once they are built:
-        // sceneObjects.Add(MeshFactory.CreateCubeMesh());
+        Mesh myCube = MeshFactory.CreateCubeMesh();
+        
+        // Push the cube out a bit so it's clearly visible
+        myCube.Position = new Vector3(0, 0, 0); 
+        sceneObjects.Add(myCube);
 
-        // 3. Main Game Loop
+        // -- Main Game Loop -- //
         while (!Raylib.WindowShouldClose())
         {
-            // -- UPDATE LOGIC (Input & Physics) --
-            // TODO: Read Raylib.IsKeyDown() here to move the camera or rotate the meshes!
+            // -- Update Logic -- //
+            
+            // Constantly rotate the cube to see it in action!
+            myCube.Rotation.X += 0.01f;
+            myCube.Rotation.Y += 0.02f;
+            myCube.Rotation.Z += 0.01f;
 
-            // -- DRAWING LOGIC --
+            // Optional: Move camera with keyboard
+            if (Raylib.IsKeyDown(KeyboardKey.W)) camera.Position.Z += 0.1f;
+            if (Raylib.IsKeyDown(KeyboardKey.S)) camera.Position.Z -= 0.1f;
+
+            // -- Drawing Logic -- //
             Raylib.BeginDrawing();
-            Raylib.ClearBackground(Color.Black);
-
-            // Pass the world data to the Renderer pipeline
+            
+            // Execute the custom rendering pipeline
             renderer.RenderScene(sceneObjects, camera);
 
+            // Draw UI on top of the rendered frame
             Raylib.DrawFPS(10, 10);
+            Raylib.DrawText("W/S to move camera", 10, 30, 20, Color.Green);
+            
             Raylib.EndDrawing();
         }
 
-        // 4. Cleanup
+        // -- Cleanup -- //
         Raylib.CloseWindow();
     }
 }

@@ -51,4 +51,9 @@ public struct Vector3
         return new Vector3(X / length, Y / length, Z / length);
     }
 
+    public Vector4 ToVector4()
+    {
+        return new Vector4(X, Y, Z, 1.0f);
+    }
+
 }
