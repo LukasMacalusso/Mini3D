@@ -31,13 +31,15 @@ public unsafe class Renderer
         _screenTexture = Raylib.LoadTextureFromImage(_screenImage);
     }
 
+    public bool WireframeMode = false;
+
     public void RenderScene(List<Mesh> sceneObjects, Camera camera)
     {
-        // - Clear screen - //
+        // 1. Clear our custom framebuffer
         ClearFrameBuffer(Color.Black);
         _facesToDraw.Clear();
 
-        // - Get Matrices - //
+        // 2. Matrix Math
         Matrix4x4 viewMatrix = camera.GetViewMatrix();
         Matrix4x4 perspectiveMatrix = ProjectionMatrixFactory.CreatePerspectiveMatrix(
             90.0f,                               // - Field of View in Degrees
@@ -66,6 +68,13 @@ public unsafe class Renderer
                 Vector4 projectedV2 = perspectiveMatrix * viewMatrix * worldMatrix * v2;
                 Vector4 projectedV3 = perspectiveMatrix * viewMatrix * worldMatrix * v3;
 
+                // Simple Near-Plane Culling: If any vertex is behind or too close to the camera, drop the triangle.
+                // (Proper 3D engines clip the triangle into smaller triangles, but this prevents the perspective divide explosion!)
+                if (projectedV1.W <= 0.1f || projectedV2.W <= 0.1f || projectedV3.W <= 0.1f)
+                {
+                    continue;
+                }
+
                 // -- Get Normalized Device Coordinates -- //
                 Vector3 ndcV1 = new Vector3(projectedV1.X / projectedV1.W, projectedV1.Y / projectedV1.W, projectedV1.Z / projectedV1.W);
                 Vector3 ndcV2 = new Vector3(projectedV2.X / projectedV2.W, projectedV2.Y / projectedV2.W, projectedV2.Z / projectedV2.W);
@@ -84,20 +93,28 @@ public unsafe class Renderer
 
         _facesToDraw.Sort((a, b) => b.AverageDepth.CompareTo(a.AverageDepth));
 
-        // -- Draw all triangles to the Frame Buffer -- //
         foreach (ScreenTriangle triangle in _facesToDraw)
         {
-            DrawFilledTriangle(triangle.PointA, triangle.PointB, triangle.PointC, Color.DarkBlue);
-            DrawLine(triangle.PointA, triangle.PointB, Color.White);
-            DrawLine(triangle.PointB, triangle.PointC, Color.White);
-            DrawLine(triangle.PointC, triangle.PointA, Color.White);
+            if (WireframeMode)
+            {
+                DrawLine(triangle.PointA, triangle.PointB, Color.Green);
+                DrawLine(triangle.PointB, triangle.PointC, Color.Green);
+                DrawLine(triangle.PointC, triangle.PointA, Color.Green);
+            }
+            else
+            {
+                DrawFilledTriangle(triangle.PointA, triangle.PointB, triangle.PointC, Color.DarkBlue);
+                DrawLine(triangle.PointA, triangle.PointB, Color.Black);
+                DrawLine(triangle.PointB, triangle.PointC, Color.Black);
+                DrawLine(triangle.PointC, triangle.PointA, Color.Black);
+            }
         }
 
         Raylib.UpdateTexture(_screenTexture, _screenImage.Data);
         Raylib.DrawTexture(_screenTexture, 0, 0, Color.White);
     }
 
-    // -- Helper Drawing Methods -- //
+    // --- Helper Drawing Methods --- //
     public void ClearFrameBuffer(Color color)
     {
         for (int i = 0; i < _screenWidth * _screenHeight; i++)
