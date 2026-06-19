@@ -10,10 +10,10 @@ public static class ProjectionMatrixFactory
         float xScale = yScale / aspect;
         
 		return new Matrix4x4(
-    		xScale, 0.0f,   0.0f,                         0.0f,
-    		0.0f,   yScale, 0.0f,                         0.0f,
-    		0.0f,   0.0f,   far / (far - near),           1.0f,
-    		0.0f,   0.0f,   (-near * far) / (far - near), 0.0f
+    		xScale, 0.0f,   0.0f,               0.0f,
+    		0.0f,   yScale, 0.0f,               0.0f,
+    		0.0f,   0.0f,   far / (far - near), (-near * far) / (far - near),
+    		0.0f,   0.0f,   1.0f,               0.0f
 		);
     }
 }

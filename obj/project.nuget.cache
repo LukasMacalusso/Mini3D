@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "xYcKbL8qjSA=",
+  "dgSpecHash": "45XNFNzEhPI=",
   "success": true,
-  "projectFilePath": "C:\\uct\\3DEngine\\Mini3D\\Mini3D.csproj",
+  "projectFilePath": "/home/lsmacalusso/Code/csharp/Mini3D/Mini3D.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\ignac\\.nuget\\packages\\raylib-cs\\8.0.0\\raylib-cs.8.0.0.nupkg.sha512"
+    "/home/lsmacalusso/.nuget/packages/raylib-cs/8.0.0/raylib-cs.8.0.0.nupkg.sha512",
+    "/home/lsmacalusso/.nuget/packages/microsoft.aspnetcore.app.ref/10.0.8/microsoft.aspnetcore.app.ref.10.0.8.nupkg.sha512"
   ],
   "logs": []
 }
