@@ -1,4 +1,5 @@
 namespace Mini3D.Engine;
+
 using Mini3D.Math;
 
 public class Camera
@@ -12,12 +13,11 @@ public class Camera
         Target = target;
     }
 
-    // -- Matrix Generation -- //
-	public Matrix4x4 GetViewMatrix()
+    public Matrix4x4 GetViewMatrix()
     {
         Vector3 worldUp = new Vector3(0, 1, 0);
 
-        Vector3 forward = (Position - Target).GetNormalized();
+        Vector3 forward = (Target - Position).GetNormalized();
         Vector3 right = Vector3.CrossProduct(worldUp, forward).GetNormalized();
         Vector3 up = Vector3.CrossProduct(forward, right);
 
@@ -25,11 +25,11 @@ public class Camera
         float ty = -Vector3.DotProduct(Position, up);
         float tz = -Vector3.DotProduct(Position, forward);
 
-    	return new Matrix4x4(
-        	right.X,   right.Y,   right.Z,   tx,
-        	up.X,      up.Y,      up.Z,      ty,
-        	forward.X, forward.Y, forward.Z, tz,
-        	0.0f,      0.0f,      0.0f,      1.0f
-    	);
+        return new Matrix4x4(
+            right.X, right.Y, right.Z, tx,
+            up.X, up.Y, up.Z, ty,
+            forward.X, forward.Y, forward.Z, tz,
+            0.0f, 0.0f, 0.0f, 1.0f
+        );
     }
 }
