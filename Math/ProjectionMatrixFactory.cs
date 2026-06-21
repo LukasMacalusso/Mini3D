@@ -1,5 +1,4 @@
-namespace Mini3D.Engine;
-using Mini3D.Math;
+namespace Mini3D.Math;
 
 public static class ProjectionMatrixFactory
 {
