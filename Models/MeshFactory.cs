@@ -4,9 +4,9 @@ using Mini3D.Math;
 
 public static class MeshFactory
 {
-    // -- Geometry Generators -- //
+    // -- Geometry Generators --
 
-    // -- CUBE -- //
+    // -- CUBE --
     public static Mesh CreateCubeMesh()
     {
         return new Mesh
@@ -40,7 +40,7 @@ public static class MeshFactory
         return [.. Front(), .. Back(), .. Left(), .. Right(), .. Top(), .. Bottom()];
     }
 
-    // -- PYRAMID -- //
+    // -- PYRAMID --
     public static Mesh CreatePyramidMesh()
     {
         return new Mesh
@@ -72,7 +72,7 @@ public static class MeshFactory
         return [.. Base(), .. Front(), .. Right(), .. Back(), .. Left()];
     }
 
-    // -- PRISM -- //
+    // -- PRISM --
     public static Mesh CreatePrismMesh()
     {
         return new Mesh

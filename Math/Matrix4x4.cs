@@ -29,7 +29,7 @@ public struct Matrix4x4
     public Vector4 Column3 => new Vector4(M13, M23, M33, M43);
     public Vector4 Column4 => new Vector4(M14, M24, M34, M44);
 
-    // -- Operator Overloads -- //
+    // -- Operator Overloads --
     public static Matrix4x4 operator *(Matrix4x4 left, Matrix4x4 right)
     {
         Vector4 r1 = left.Row1;

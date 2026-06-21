@@ -10,12 +10,12 @@ using System.Reflection.PortableExecutable;
 
 public unsafe class Renderer
 {
-    // -- Render window setup -- //
+    // -- Render window setup --
     private int _screenWidth;
     private int _screenHeight;
     private List<ScreenTriangle> _screenTriangles;
 
-    // -- Framebuffer Setup -- //
+    // -- Framebuffer Setup --
     private Color* _frameBuffer;
     private Texture2D _screenTexture;
     private Image _screenImage;
@@ -27,7 +27,7 @@ public unsafe class Renderer
         _screenHeight = height;
         _screenTriangles = new List<ScreenTriangle>();
 
-        // - Setup custom framebuffer - //
+        // - Setup custom framebuffer -
         _screenImage = Raylib.GenImageColor(_screenWidth, _screenHeight, Color.Black);
         _frameBuffer = (Color*)_screenImage.Data;
         _screenTexture = Raylib.LoadTextureFromImage(_screenImage);
@@ -63,12 +63,12 @@ public unsafe class Renderer
     private void SetScreenTrianglesFromSceneMeshes(List<Mesh> sceneObjects, Camera camera)
     {
 
-        Matrix4x4 viewMatrix = camera.GetViewMatrix();
+        Matrix4x4 viewMatrix = MatrixFactory.CreateViewMatrix(camera.Position, camera.Target, new Vector3(0, 1, 0));
         Matrix4x4 perspectiveMatrix = ProjectionMatrixFactory.CreatePerspectiveMatrix(
-            90.0f,                               // - Field of View in Degrees
-            _screenWidth / (float)_screenHeight, // - Aspect Ratio (Width / Height)
-            0.1f,                                // - Near Clipping Plane
-            1000f                                // - Far Clipping Plane
+            90.0f,                               // - Field of View in Degrees -
+            _screenWidth / (float)_screenHeight, // - Aspect Ratio (Width / Height) -
+            0.1f,                                // - Near Clipping Plane -
+            1000f                                // - Far Clipping Plane -
         );
 
         foreach (Mesh mesh in sceneObjects)
@@ -88,7 +88,7 @@ public unsafe class Renderer
             Matrix4x4 fullTransform = perspectiveMatrix * viewMatrix * worldMatrix;
             ApplyTransform(ref v1, ref v2, ref v3, fullTransform);
 
-            // Simple Near-Plane Culling: If any vertex is behind or too close to the camera, drop the triangle.
+            // - Simple Near-Plane Culling: If any vertex is behind or too close to the camera, drop the triangle. -
             if (v1.W <= 0.1f || v2.W <= 0.1f || v3.W <= 0.1f)
             {
                 continue;

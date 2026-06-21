@@ -3,7 +3,7 @@ using Mini3D.Math;
 
 public static class ProjectionMatrixFactory
 {
-    // -- Projection Matrices -- //
+    // -- Projection Matrices --
     public static Matrix4x4 CreatePerspectiveMatrix(float fovDegrees, float aspect, float near, float far)
     {
         float fovRadians = fovDegrees * (float)System.Math.PI / 180.0f;

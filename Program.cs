@@ -13,18 +13,18 @@ class Program
 
     static void Main(string[] args)
     {
-        // -- Initialize Window -- //
+        // -- Initialize Window --
         const int screenWidth = 1000;
         const int screenHeight = 800;
         Raylib.InitWindow(screenWidth, screenHeight, "Mini 3D Defense Showcase");
         Raylib.SetTargetFPS(60);
         Raylib.DisableCursor();
 
-        // -- Setup Engine -- //
+        // -- Setup Engine --
         Renderer renderer = new Renderer(screenWidth, screenHeight);
         Camera camera = new Camera(new Vector3(0, 0, -5), new Vector3(0, 0, 0));
 
-        // -- Scene Setup -- //
+        // -- Scene Setup --
         List<Mesh> allMeshes = new List<Mesh>
         {
             MeshFactory.CreateCubeMesh(),
@@ -36,13 +36,13 @@ class Program
 
         while (!Raylib.WindowShouldClose())
         {
-            // -- Bind Controllers -- //
+            // -- Bind Controllers --
             MovementController(camera);
             ModeController(renderer);
             MeshSwapController(allMeshes, sceneObjects);
             TransformationController(sceneObjects);
 
-            // -- Render -- //
+            // -- Render --
             Raylib.BeginDrawing();
 
             renderer.RenderScene(sceneObjects, camera);

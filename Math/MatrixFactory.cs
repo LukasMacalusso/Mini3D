@@ -2,7 +2,7 @@ namespace Mini3D.Math;
 
 public static class MatrixFactory
 {
-    // -- Matrix Generators -- //
+    // -- Matrix Generators --
     public static Matrix4x4 CreateIdentityMatrix()
     {
         return new Matrix4x4(
@@ -13,7 +13,7 @@ public static class MatrixFactory
         );
     }
 
-    // -- Transformation Generators -- //
+    // -- Transformation Generators --
     public static Matrix4x4 CreateTranslationMatrix(Vector3 offset)
     {
         return new Matrix4x4(
@@ -73,6 +73,24 @@ public static class MatrixFactory
         );
     }
 
+    public static Matrix4x4 CreateViewMatrix(Vector3 position, Vector3 target, Vector3 up)
+    {
+        Vector3 forward = (target - position).GetNormalized();
+        Vector3 right = Vector3.CrossProduct(up, forward).GetNormalized();
+        Vector3 actualUp = Vector3.CrossProduct(forward, right);
+
+        float tx = -Vector3.DotProduct(position, right);
+        float ty = -Vector3.DotProduct(position, actualUp);
+        float tz = -Vector3.DotProduct(position, forward);
+
+        return new Matrix4x4(
+            right.X, right.Y, right.Z, tx,
+            actualUp.X, actualUp.Y, actualUp.Z, ty,
+            forward.X, forward.Y, forward.Z, tz,
+            0.0f, 0.0f, 0.0f, 1.0f
+        );
+    }
+
     public static Matrix4x4 CreateWorldMatrix(Vector3 position, Vector3 rotation, Vector3 scale)
     {
         Matrix4x4 scaleMatrix = CreateScaleMatrix(scale);
@@ -81,7 +99,7 @@ public static class MatrixFactory
         Matrix4x4 rotZ = CreateRotationZ(rotation.Z);
         Matrix4x4 translationMatrix = CreateTranslationMatrix(position);
 
-        // Multiplication order for column vectors (v' = T * R * S * v)
+        // - Multiplication order for column vectors (v' = T * R * S * v) -
         return translationMatrix * rotZ * rotY * rotX * scaleMatrix;
     }
 }
