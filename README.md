@@ -13,5 +13,7 @@ Mini3D is a software-based 3D rendering engine developed in C#. It implements a 
 ## PreRequisites
 - .NET SDK installed on your machine.
 ## Run
+```bash
 dotnet build Mini3D.csproj
 dotnet run --project Mini3D.csproj
+```
